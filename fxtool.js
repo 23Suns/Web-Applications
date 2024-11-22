@@ -26,30 +26,74 @@ const exchangeRates = [
 	["ZAR", 17.92624],
 ];
 
+const fromCurrencySelect = document.getElementById('fromCurrency');
+const toCurrencySelect = document.getElementById('toCurrency');
+const amountInput = document.getElementById('amountInput');   
+const convertButton = document.getElementById("convertButton");
+const resultElement = document.getElementById("result");
+
 document.addEventListener("DOMContentLoaded", () => {
-    const selectElements = document.getElementsByClassName("currencySelect");
+	const selectElements = document.getElementsByClassName("currencySelect");
 
-    for (let i = 0; i < selectElements.length; i++) {
-        const selectElement = selectElements[i];
+	for (let i = 0; i < selectElements.length; i++) {
+		const selectElement = selectElements[i];
 
-        symbolsData.forEach((currencyPair) => {
-            const option = document.createElement("option");
-            option.value = currencyPair[0];
-            option.text = currencyPair[1];
-            selectElement.appendChild(option);
-        });
-    }
+		symbolsData.forEach((currencyPair) => {
+			const option = document.createElement("option");
+			option.value = currencyPair[0];
+			option.text = currencyPair[1];
+			selectElement.appendChild(option);
+		});
+	}
 });
 
-const currencyInput = document.getElementById("currencyInput");
-
-currencyInput.addEventListener("input", () => {
-	const currencyAmount = currencyInput.value;
+amountInput.addEventListener("input", () => {
+	const currencyAmount = amountInput.value;
 	console.log("Currency Amount:", currencyAmount);
 });
 
-const convertButton = document.getElementById("convertButton");
-const resultElement = document.getElementById("result");
+convertButton.addEventListener("click", () => {
+	const fromCurrency = fromCurrencySelect.value;
+	const toCurrency = toCurrencySelect.value;
+	const amount = parseFloat(amountInput.value);
+
+	if (isNaN(amount)) {
+		resultElement.textContent = "Invalid amount";
+		return;
+	}
+
+	const exchangeRate = getExchangeRate(
+		fromCurrency,
+		toCurrency,
+		exchangeRates
+	);
+
+	if (exchangeRate === null) {
+		resultElement.textContent = "Exchange rate not found.";
+		return;
+	}
+
+	const convertedAmount = amount * exchangeRate;
+
+	resultElement.textContent = `${amount} ${fromCurrency} = ${convertedAmount.toFixed(
+		2
+	)} ${toCurrency}`;
+});
+
+function getExchangeRate(fromCurrency, toCurrency, exchangeRates) {
+	for (const [currency, rate] of exchangeRates) {
+		if (currency === fromCurrency) {
+			const fromRate = rate;
+			for (const [currency, rate] of exchangeRates) {
+				if (currency === toCurrency) {
+					const toRate = rate;
+					return toRate / fromRate;
+				}
+			}
+		}
+	}
+	return null; // Exchange rate not found
+}
 
 /**
  * Converts a currency amount from one currency to another using provided exchange rates.
@@ -135,8 +179,8 @@ function getFixedRate(indexes, exchangeRates) {
 
 	const originRate = exchangeRates[originIndex][1];
 	const targetRate = exchangeRates[targetIndex][1];
-	console.log("USD_to_RUB", originRate);
-	console.log("USD_to_CNY", targetRate);
+	// console.log("USD_to_RUB", originRate);
+	// console.log("USD_to_CNY", targetRate);
 	const convertRate = targetRate / originRate;
 	return convertRate;
 }
