@@ -1,5 +1,15 @@
-function playRPS(user) {
+let gamePhase = false;
 
+const startButton = document.getElementById("check");
+startButton.addEventListener("click", startGame);
+
+function startGame() {
+	document.getElementById("check").style.visibility = "hidden";
+	document.querySelector(".info").style.visibility = "hidden";
+	const playerChoice = getPlayerChoice(); // Get player's choice
+	playRPS(playerChoice); // Start the round with player's choice
+}
+function playRPS(user) {
 	let result = "";
 	let options = {
 		Rock: {
@@ -36,56 +46,47 @@ function playRPS(user) {
 		result = "It's a draw";
 	}
 
-	// document.getElementById("player").innerHTML = "Player [" + user + "]";
-	// document.getElementById("comp").innerHTML = "Computer [" + comp + "]";
-	// document.getElementById("result").innerHTML = "Result [" + result + "]";
-
 	const outcome = document.querySelector(".info");
 	outcome.innerHTML = result;
 }
 
-function startGame() {
-	document.getElementById("check").style.visibility = "hidden";
-	document.querySelector(".info").style.visibility = "hidden";
-	let player = getPlayerChoice();
-}
-
 function getPlayerChoice() {
 	let playerChoice;
+	let choiceMade = false;
 
-	const outcome = document.getElementById("check");
 	const rockChoice = document.getElementById("rock");
 	const paperChoice = document.getElementById("paper");
 	const scissorChoice = document.getElementById("scissors");
 
-	rockChoice.addEventListener('click', () => {
-		paperChoice.style.filter = ""
-		scissorChoice.style.filter = ""
-		rockChoice.style.filter = "invert(38%) sepia(98%) saturate(7438%) hue-rotate(308deg) brightness(102%) contrast(119%)";
+	startButton.innerHTML = "Deal Hand";
+	startButton.style.visibility = "visible";
+
+	rockChoice.addEventListener("click", () => {
+		paperChoice.style.filter = "";
+		scissorChoice.style.filter = "";
+		rockChoice.style.filter =
+			"invert(38%) sepia(98%) saturate(7438%) hue-rotate(308deg) brightness(102%) contrast(119%)";
 		playerChoice = "Rock";
+		choiceMade = true;
 	});
-	paperChoice.addEventListener('click', () => {
-		rockChoice.style.filter = ""
-		scissorChoice.style.filter = ""
-		paperChoice.style.filter = "invert(38%) sepia(98%) saturate(7438%) hue-rotate(308deg) brightness(102%) contrast(119%)";
+	paperChoice.addEventListener("click", () => {
+		rockChoice.style.filter = "";
+		scissorChoice.style.filter = "";
+		paperChoice.style.filter =
+			"invert(38%) sepia(98%) saturate(7438%) hue-rotate(308deg) brightness(102%) contrast(119%)";
 		playerChoice = "Paper";
+		choiceMade = true;
 	});
-	scissorChoice.addEventListener('click', () => {
-		rockChoice.style.filter = ""
-		paperChoice.style.filter = ""
-		scissorChoice.style.filter = "invert(38%) sepia(98%) saturate(7438%) hue-rotate(308deg) brightness(102%) contrast(119%)";
+	scissorChoice.addEventListener("click", () => {
+		rockChoice.style.filter = "";
+		paperChoice.style.filter = "";
+		scissorChoice.style.filter =
+			"invert(38%) sepia(98%) saturate(7438%) hue-rotate(308deg) brightness(102%) contrast(119%)";
 		playerChoice = "Scissors";
+		choiceMade = true;
 	});
-	
 
-	
-	outcome.style.visibility = "visible";
-	outcome.innerHTML = "Deal Hand"
-
-}
-
-function playRound(choice) {
-	
+	return playerChoice;
 }
 
 // function getPlayerChoice() {

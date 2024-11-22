@@ -26,9 +26,9 @@ const exchangeRates = [
 	["ZAR", 17.92624],
 ];
 
-const fromCurrencySelect = document.getElementById('fromCurrency');
-const toCurrencySelect = document.getElementById('toCurrency');
-const amountInput = document.getElementById('amountInput');   
+const fromCurrencySelect = document.getElementById("fromCurrency");
+const toCurrencySelect = document.getElementById("toCurrency");
+const amountInput = document.getElementById("amountInput");
 const convertButton = document.getElementById("convertButton");
 const resultElement = document.getElementById("result");
 
