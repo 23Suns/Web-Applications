@@ -1,40 +1,65 @@
+const symbolsData = [
+	["AUD", "Australian Dollar"],
+	["CAD", "Canadian Dollar"],
+	["CLP", "Chilean Peso"],
+	["CNY", "Chinese Yuan"],
+	["EUR", "Euro"],
+	["GBP", "British Pound Sterling"],
+	["INR", "Indian Rupee"],
+	["JPY", "Japanese Yen"],
+	["RUB", "Russian Ruble"],
+	["USD", "United States Dollar"],
+	["ZAR", "South African Rand"],
+];
+
+const exchangeRates = [
+	["USD", 1.0],
+	["AUD", 1.531863],
+	["CAD", 1.36029],
+	["CLP", 950.662057],
+	["CNY", 7.128404],
+	["EUR", 1.03203],
+	["GBP", 0.920938],
+	["INR", 81.255504],
+	["JPY", 143.376504],
+	["RUB", 57.875038],
+	["ZAR", 17.92624],
+];
+
+document.addEventListener("DOMContentLoaded", () => {
+    const selectElements = document.getElementsByClassName("currencySelect");
+
+    for (let i = 0; i < selectElements.length; i++) {
+        const selectElement = selectElements[i];
+
+        symbolsData.forEach((currencyPair) => {
+            const option = document.createElement("option");
+            option.value = currencyPair[0];
+            option.text = currencyPair[1];
+            selectElement.appendChild(option);
+        });
+    }
+});
+
+const currencyInput = document.getElementById("currencyInput");
+
+currencyInput.addEventListener("input", () => {
+	const currencyAmount = currencyInput.value;
+	console.log("Currency Amount:", currencyAmount);
+});
+
+const convertButton = document.getElementById("convertButton");
+const resultElement = document.getElementById("result");
+
 /**
  * Converts a currency amount from one currency to another using provided exchange rates.
  *
  * @param {string[]} symbolsData - An array of currency symbols and their corresponding names.
  * @param {number[][]} exchangeRates - An array of exchange rates for different currency pairs.
- * 
+ *
  * @returns {number} - The converted currency amount.
  */
 function convertCurrency() {
-	const symbolsData = [
-		["AUD", "Australian Dollar"],
-		["CAD", "Canadian Dollar"],
-		["CLP", "Chilean Peso"],
-		["CNY", "Chinese Yuan"],
-		["EUR", "Euro"],
-		["GBP", "British Pound Sterling"],
-		["INR", "Indian Rupee"],
-		["JPY", "Japanese Yen"],
-		["RUB", "Russian Ruble"],
-		["USD", "United States Dollar"],
-		["ZAR", "South African Rand"],
-	];
-
-	const exchangeRates = [
-		["USD", 1.0],
-		["AUD", 1.531863],
-		["CAD", 1.36029],
-		["CLP", 950.662057],
-		["CNY", 7.128404],
-		["EUR", 1.03203],
-		["GBP", 0.920938],
-		["INR", 81.255504],
-		["JPY", 143.376504],
-		["RUB", 57.875038],
-		["ZAR", 17.92624],
-	];
-
 	let convertSources = getCurrencySymbols(symbolsData);
 	let exactRate = getFixedRate(convertSources, exchangeRates);
 	let newAmount = 0;
@@ -51,11 +76,11 @@ function convertCurrency() {
 
 /**
  * Gets currency symbols and validates them.
- * 
+ *
  * @param {string[][]} symbolsData - An array of currency symbols and their corresponding names.
- * 
- * @returns {string[]}} - An array containing the selected currency symbols 
-*/
+ *
+ * @returns {string[]}} - An array containing the selected currency symbols
+ */
 function getCurrencySymbols(symbolsData) {
 	let convertResponse = [];
 
@@ -116,35 +141,34 @@ function getFixedRate(indexes, exchangeRates) {
 	return convertRate;
 }
 
+// function getUserInput(knownSymbolsData, target) {
+// 	let userInputCode = "";
+// 	let userInputAmount = "";
 
-function getUserInput(knownSymbolsData, target) {
-	let userInputCode = "";
-	let userInputAmount = "";
+// 	do {
+// 		userInputCode = window.prompt("Enter " + target + " Currency Code");
+// 		if (!isValidCode(userInputCode, knownSymbolsData)) {
+// 			userInputCode = window.prompt(
+// 				"Invalid. These are the available currency codes: " +
+// 					knownSymbolsData.map((element) => element[0]).join(", ")
+// 			);
+// 		}
+// 	} while (
+// 		!isValidCode(userInputCode, knownSymbolsData) &&
+// 		userInputCode !== null
+// 	);
 
-	do {
-		userInputCode = window.prompt("Enter " + target + " Currency Code");
-		if (!isValidCode(userInputCode, knownSymbolsData)) {
-			userInputCode = window.prompt(
-				"Invalid. These are the available currency codes: " +
-					knownSymbolsData.map((element) => element[0]).join(", ")
-			);
-		}
-	} while (
-		!isValidCode(userInputCode, knownSymbolsData) &&
-		userInputCode !== null
-	);
+// 	do {
+// 		userInputAmount = window.prompt("Enter " + target + " Currency Amount");
+// 		if (isNaN(userInputAmount)) {
+// 			userInputAmount = window.prompt(
+// 				"Invalid. Please enter a valid amount"
+// 			);
+// 		}
+// 	} while (isNaN(userInputAmount) && userInputAmount !== null);
 
-	do {
-		userInputAmount = window.prompt("Enter " + target + " Currency Amount");
-		if (isNaN(userInputAmount)) {
-			userInputAmount = window.prompt(
-				"Invalid. Please enter a valid amount"
-			);
-		}
-	} while (isNaN(userInputAmount) && userInputAmount !== null);
-
-	return userInputCode;
-}
+// 	return userInputCode;
+// }
 
 /**
  * Finds partial matches of a given symbol in a list of symbols.
