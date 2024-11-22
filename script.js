@@ -9,22 +9,22 @@ paragraphs.forEach((p) => {
 	p.style.color = "blue";
 });
 
-// Event Listener
-const button = document.getElementById("myButton");
-button.addEventListener("click", () => {
-	alert("Button clicked!");
-});
+// // Event Listener
+// const button = document.getElementById("myButton");
+// button.addEventListener("click", () => {
+// 	alert("Button clicked!");
+// });
 
-// Fetching Data (Example)
-fetch("https://api.example.com/data")
-	.then((response) => response.json())
-	.then((data) => {
-		console.log(data);
-		// Use the fetched data to update the DOM or trigger other actions
-	})
-	.catch((error) => {
-		console.error("Error fetching data:", error);
-	});
+// // Fetching Data (Example)
+// fetch("https://api.example.com/data")
+// 	.then((response) => response.json())
+// 	.then((data) => {
+// 		console.log(data);
+// 		// Use the fetched data to update the DOM or trigger other actions
+// 	})
+// 	.catch((error) => {
+// 		console.error("Error fetching data:", error);
+// 	});
 
 /* When the user clicks on the button, 
 toggle between hiding and showing the dropdown content */
